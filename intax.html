@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOHIDA ERKINJONOVA | IT & AI CLUB CURRICULUM</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter and Fira Code for Notion code style -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        notion: {
+                            bg: '#191919',
+                            card: '#202020',
+                            sidebar: '#121212',
+                            hover: '#2c2c2c',
+                            border: '#2f2f2f',
+                            text: '#d3d3d3',
+                            muted: '#909090',
+                            accent: '#38bdf8',
+                            code: '#22c55e',
+                            purple: '#a855f7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #191919;
+            color: #d3d3d3;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .notion-toggle-arrow {
+            transition: transform 0.15s ease-in-out;
+        }
+        
+        .notion-toggle[open] > summary .notion-toggle-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #191919;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444444;
+        }
+
+        .cyber-banner {
+            background: linear-gradient(135deg, #090b14 0%, #170d2b 40%, #031525 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-grid {
+            background-size: 30px 30px;
+            background-image: 
+                linear-gradient(to right, rgba(168, 85, 247, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-purple-500/30 selection:text-purple-200">
+
+    <!-- Navigation / Breadcrumbs Bar -->
+    <header class="sticky top-0 z-50 bg-[#121212]/90 backdrop-blur-md border-b border-notion-border px-4 py-2.5 flex items-center justify-between text-xs text-notion-muted">
+        <div class="flex items-center space-x-2 overflow-x-auto">
+            <span class="flex items-center gap-1.5 text-notion-text font-medium cursor-pointer hover:underline" onclick="showDashboard()">
+                <i class="fa-solid fa-graduation-cap text-purple-400"></i>
+                <span>XOS IT & AI CLUB</span>
+            </span>
+            <span class="text-notion-border">/</span>
+            <span id="breadcrumb-current" class="text-notion-muted hover:text-notion-text transition cursor-pointer">Dars Rejasi</span>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-2 bg-[#202020] px-2.5 py-1 rounded border border-notion-border text-xs text-emerald-400 font-mono">
+                <i class="fa-solid fa-circle text-[8px] animate-pulse"></i>
+                <span>2026-2027 O'quv Yili</span>
+            </div>
+            <button onclick="toggleAllToggles(true)" title="Barchasini ochish" class="px-2 py-1 bg-notion-card hover:bg-notion-hover border border-notion-border rounded text-notion-text text-xs transition flex items-center gap-1">
+                <i class="fa-solid fa-folder-open text-xs"></i>
+                <span class="hidden md:inline">Barchasini ochish</span>
+            </button>
+            <button onclick="toggleAllToggles(false)" title="Barchasini yopish" class="px-2 py-1 bg-notion-card hover:bg-notion-hover border border-notion-border rounded text-notion-text text-xs transition flex items-center gap-1">
+                <i class="fa-solid fa-folder-closed text-xs"></i>
+                <span class="hidden md:inline">Yopish</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Notion Banner Cover -->
+    <div class="cyber-banner w-full h-48 md:h-64 border-b border-notion-border flex flex-col justify-end p-6 relative">
+        <div class="cyber-grid absolute inset-0 pointer-events-none"></div>
+        
+        <!-- Glowing Ambient Lights -->
+        <div class="absolute -top-10 -left-10 w-60 h-60 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-10 right-10 w-80 h-80 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <!-- Decorative Header Graphics -->
+        <div class="max-w-5xl mx-auto w-full relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <p class="text-cyan-400 font-mono text-xs md:text-sm tracking-widest uppercase mb-1">
+                        <i class="fa-solid fa-code text-purple-400 mr-1.5"></i>Ra'qamli Qizlar & Startup Incubation
+                    </p>
+                    <h1 class="text-2xl md:text-4xl lg:text-5xl font-black tracking-wider text-white font-mono uppercase drop-shadow-md">
+                        SHOHIDA ERKINJONOVA
+                    </h1>
+                    <p class="text-xs md:text-sm text-purple-300 font-mono mt-1 tracking-widest uppercase flex items-center gap-2">
+                        <span>TEACHER & COORDINATOR PLAN</span>
+                        <span class="text-notion-border">|</span>
+                        <span class="text-cyan-400">XOS IT & AI CLUB</span>
+                    </p>
+                </div>
+                
+                <!-- Progress Tracker Badge -->
+                <div class="bg-[#121212]/80 backdrop-blur border border-notion-border p-3 rounded-lg flex flex-col min-w-[220px]">
+                    <div class="flex justify-between items-center text-xs mb-1.5">
+                        <span class="text-notion-muted font-medium"><i class="fa-solid fa-tasks text-purple-400 mr-1"></i>Vazifalar Bajarilishi:</span>
+                        <span id="progress-percent" class="font-mono text-emerald-400 font-bold">0%</span>
+                    </div>
+                    <div class="w-full bg-[#2a2a2a] h-2 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="bg-gradient-to-r from-purple-500 to-cyan-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                    <span id="progress-count" class="text-[10px] text-notion-muted mt-1 text-right font-mono">0 / 0 bajarildi</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 flex-1">
+        
+        <!-- Large Notion Title Block -->
+        <div class="mb-8 border-b border-notion-border pb-6">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl shadow-inner">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white font-mono">
+                    FRONTEND & AI ROADMAP
+                </h2>
+            </div>
+            <p class="text-notion-muted text-sm mt-2 max-w-3xl leading-relaxed">
+                Ushbu reja Bekobod shahri, Xos qishlog'i "Xos IT & AI Club" hamda "Raqamli Avlod Qizlari" loyihasi doirasida o'quvchi-qizlarni g'oyadan tayyor startap va AI prototiplarigacha yetaklash uchun maxsus tayyorlangan.
+            </p>
+
+            <!-- Search and Filter Bar -->
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-notion-muted text-sm"></i>
+                    <input type="text" id="search-input" onkeyup="filterLessons()" placeholder="Darslar, mavzular yoki vazifalardan qidirish..." 
+                           class="w-full pl-10 pr-4 py-2 bg-notion-card border border-notion-border rounded-lg text-sm text-notion-text placeholder-notion-muted focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="filterCategory('all')" class="cat-btn active px-3 py-2 bg-notion-card hover:bg-notion-hover border border-notion-border rounded-lg text-xs font-mono text-notion-text transition">
+                        Barchasi
+                    </button>
+                    <button onclick="filterCategory('debocha')" class="cat-btn px-3 py-2 bg-notion-card hover:bg-notion-hover border border-notion-border rounded-lg text-xs font-mono text-notion-muted transition">
+                        Startap
+                    </button>
+                    <button onclick="filterCategory('ai')" class="cat-btn px-3 py-2 bg-notion-card hover:bg-notion-hover border border-notion-border rounded-lg text-xs font-mono text-notion-muted transition">
+                        AI & Prototiplash
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notion Track Quick Links Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
+            <a href="#modul-1" class="p-3.5 bg-notion-card hover:bg-notion-hover border border-notion-border rounded-lg transition flex items-center gap-3 group">
+                <div class="p-2 rounded bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-rocket text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-xs font-mono text-cyan-400 font-semibold">FOUNDATION & DEBOCHA</h3>
+                    <p class="text-[11px] text-notion-muted">Startap asoslari va muammo topish</p>
+                </div>
+            </a>
+            <a href="#modul-2" class="p-3.5 bg-notion-card hover:bg-notion-hover border border-notion-border rounded-lg transition flex items-center gap-3 group">
+                <div class="p-2 rounded bg-purple-500/10 text-purple-400 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-palette text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-xs font-mono text-purple-400 font-semibold">UI/UX & CANVA DESIGN</h3>
+                    <p class="text-[11px] text-notion-muted">Prototip va taqdimot dizayni</p>
+                </div>
+            </a>
+            <a href="#modul-3" class="p-3.5 bg-notion-card hover:bg-notion-hover border border-notion-border rounded-lg transition flex items-center gap-3 group">
+                <div class="p-2 rounded bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-xs font-mono text-emerald-400 font-semibold">AI BUILDERS & NO-CODE</h3>
+                    <p class="text-[11px] text-notion-muted">Lovable, V0, ChatGPT promptlari</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- MAIN CURRICULUM MODULES (Notion Style Collapsible Hierarchy) -->
+        <div id="modules-container" class="space-y-4">
+
+            <!-- ================= MODUL 1 ================= -->
+            <details id="modul-1" class="notion-toggle group bg-notion-card border border-notion-border rounded-xl p-4 transition-all duration-200" open>
+                <summary class="cursor-pointer list-none flex items-center justify-between text-base md:text-lg font-bold font-mono text-cyan-400 select-none">
+                    <div class="flex items-center gap-2">
+                        <span class="notion-toggle-arrow inline-block text-notion-muted text-sm">►</span>
+                        <i class="fa-solid fa-folder-open text-cyan-400 text-sm"></i>
+                        <span>Modul 1 | Startap Debochasi va AI Asoslari</span>
+                    </div>
+                    <span class="text-xs font-mono bg-cyan-950 text-cyan-300 border border-cyan-800/50 px-2.5 py-0.5 rounded-full font-normal">6 Dars</span>
+                </summary>
+
+                <div class="mt-4 pl-4 md:pl-6 space-y-3 border-l-2 border-notion-border/60 ml-2 pt-2">
+
+                    <!-- Lesson 1 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3" open>
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-purple-400 text-xs"></i>
+                                <span>Lesson 1 | Startapga Kirish va Debocha Formulasi</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> Startap nima? An'anaviy biznes va texnologik startapning farqi.</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Debochining 4 asosiy bosqichi (Muammo &rarr; Yechim &rarr; Prototip &rarr; Pitching).</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> ChatGPT va AI yordamida g'oyalarni filter qilish.</li>
+                            </ul>
+
+                            <!-- AI Prompt Widget -->
+                            <div class="mt-3 p-2.5 bg-[#121212] border border-notion-border rounded flex flex-col gap-1.5">
+                                <div class="flex items-center justify-between text-[11px] font-mono text-purple-400">
+                                    <span><i class="fa-solid fa-robot mr-1"></i>ChatGPT Prompt (G'oya generatsiyasi):</span>
+                                    <button onclick="copyPrompt(this)" data-prompt="Men O'zbekistondagi qishloq hududida yashayman. Qishloq xo'jaligi va ta'lim sohasida AI texnologiyalaridan foydalanib hal qilish mumkin bo'lgan 5 ta dolzarb startap muammosini ro'yxat qilib ber." class="text-notion-muted hover:text-white transition">
+                                        <i class="fa-regular fa-copy"></i> Nusxalash
+                                    </button>
+                                </div>
+                                <code class="text-[11px] font-mono text-notion-code bg-black/40 p-2 rounded block overflow-x-auto">
+                                    "Men O'zbekistondagi qishloq hududida yashayman. Qishloq xo'jaligi va ta'lim sohasida AI texnologiyalaridan foydalanib hal qilish mumkin bo'lgan 5 ta dolzarb startap muammosini ro'yxat qilib ber."
+                                </code>
+                            </div>
+
+                            <!-- Homework Checkbox -->
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-1-1" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-1-1" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> qizlar.raqamliavlod.uz saytidan ro'yxatdan o'tish va atrofdagi (maktab, qishloq, mahalla) 3 ta real muammoni daftarga yozib kelish.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Lesson 2 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-purple-400 text-xs"></i>
+                                <span>Lesson 2 | Real Muammolarni Aniqlash (Bekobod & Xos)</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> Qishloq xo'jaligi (Agrotech), ekologiya va ta'limdagi muammolarni xaritalash.</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Problem Discovery (Intervyu o'tkazish texnikasi).</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> Prompt Engineering orqali muammoga chuqur tahlil berish.</li>
+                            </ul>
+
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-1-2" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-1-2" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> Agrotech yo'nalishida kamida 2 nafar dehqon yoki bog'bon bilan suhbatlashib, ularning asosiy qiyinchiliklarini yozib kelish.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Lesson 3 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-purple-400 text-xs"></i>
+                                <span>Lesson 3 | Yechim Formulasi va Value Proposition</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> Startap yechimining noyob qiymat taklifi (Unique Value Proposition).</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Raqobatchilarni tahlil qilish va SWOC sxemasi.</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> AI yordamida loyihaga brend nomi (Naming) o'ylab topish.</li>
+                            </ul>
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-1-3" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-1-3" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> O'z loyihangiz uchun ChatGPT yordamida 3 ta nom va slogan variantini tayyorlash.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </details>
+
+            <!-- ================= MODUL 2 ================= -->
+            <details id="modul-2" class="notion-toggle group bg-notion-card border border-notion-border rounded-xl p-4 transition-all duration-200">
+                <summary class="cursor-pointer list-none flex items-center justify-between text-base md:text-lg font-bold font-mono text-purple-400 select-none">
+                    <div class="flex items-center gap-2">
+                        <span class="notion-toggle-arrow inline-block text-notion-muted text-sm">►</span>
+                        <i class="fa-solid fa-folder-open text-purple-400 text-sm"></i>
+                        <span>Modul 2 | UI/UX Dizayn va Canva Masterclass</span>
+                    </div>
+                    <span class="text-xs font-mono bg-purple-950 text-purple-300 border border-purple-800/50 px-2.5 py-0.5 rounded-full font-normal">5 Dars</span>
+                </summary>
+
+                <div class="mt-4 pl-4 md:pl-6 space-y-3 border-l-2 border-notion-border/60 ml-2 pt-2">
+
+                    <!-- Lesson 1 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-cyan-400 text-xs"></i>
+                                <span>Lesson 1 | Canva Interface va Ranglar Nazariyasi</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> UI va UX nima? Mobil va veb ilovalarning qulaylik standartlari.</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Canva dasturida ishlash: Ranglar uyg'unligi (Color Palette) va shriftlar.</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> Startap uchun brendbook va logo yaratish.</li>
+                            </ul>
+
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-2-1" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-2-1" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> Canva’da loyiha uchun logotip va 3 xil rangdan iborat Palette tayyorlash.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Lesson 2 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-cyan-400 text-xs"></i>
+                                <span>Lesson 2 | Wireframe va Mobil Ekranlar Chizish</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> Qog'ozda birinchi eskizlarni chizish (Low-fidelity wireframe).</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Canva'da mobil ilova ekranlari prototipini tuzish (Main, Profile, Details).</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> UX User Flow: Foydalanuvchi qadami va tugmalar mantiqi.</li>
+                            </ul>
+
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-2-2" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-2-2" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> Ilovangizning kamida 3 ta asosiy ekranini Canva'da chizib chiqish.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </details>
+
+            <!-- ================= MODUL 3 ================= -->
+            <details id="modul-3" class="notion-toggle group bg-notion-card border border-notion-border rounded-xl p-4 transition-all duration-200">
+                <summary class="cursor-pointer list-none flex items-center justify-between text-base md:text-lg font-bold font-mono text-emerald-400 select-none">
+                    <div class="flex items-center gap-2">
+                        <span class="notion-toggle-arrow inline-block text-notion-muted text-sm">►</span>
+                        <i class="fa-solid fa-folder-open text-emerald-400 text-sm"></i>
+                        <span>Modul 3 | AI Builders (Lovable, V0, Bolt) & Prototiplash</span>
+                    </div>
+                    <span class="text-xs font-mono bg-emerald-950 text-emerald-300 border border-emerald-800/50 px-2.5 py-0.5 rounded-full font-normal">6 Dars</span>
+                </summary>
+
+                <div class="mt-4 pl-4 md:pl-6 space-y-3 border-l-2 border-notion-border/60 ml-2 pt-2">
+
+                    <!-- Lesson 1 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-emerald-400 text-xs"></i>
+                                <span>Lesson 1 | Lovable.dev va V0 orqali Veb-Sayt Yaratish</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> No-code va AI Builder vositalariga kirish (Lovable, V0, Bolt.new).</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Prompt orqali interaktiv veb sahifani sekundlar ichida generatsiya qilish.</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> HTML/Tailwind CSS kodini yuklab olish va tekshirish.</li>
+                            </ul>
+
+                            <!-- AI Prompt Widget -->
+                            <div class="mt-3 p-2.5 bg-[#121212] border border-notion-border rounded flex flex-col gap-1.5">
+                                <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
+                                    <span><i class="fa-solid fa-bolt mr-1"></i>Lovable / V0 Prompt Template:</span>
+                                    <button onclick="copyPrompt(this)" data-prompt="Create a responsive landing page for 'AgroXos' - an AI-powered smart farming platform in Uzbekistan. Dark mode theme, green accents, interactive crop disease calculator and contact form." class="text-notion-muted hover:text-white transition">
+                                        <i class="fa-regular fa-copy"></i> Nusxalash
+                                    </button>
+                                </div>
+                                <code class="text-[11px] font-mono text-notion-code bg-black/40 p-2 rounded block overflow-x-auto">
+                                    "Create a responsive landing page for 'AgroXos' - an AI-powered smart farming platform in Uzbekistan. Dark mode theme, green accents, crop calculator and contact form."
+                                </code>
+                            </div>
+
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-3-1" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-3-1" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> Lovable yoki V0 orqali loyihanngizning birinchi veb-sahifasi (Landing Page) prototipini yaratish va havolasini guruhga tashlash.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Lesson 2 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-emerald-400 text-xs"></i>
+                                <span>Lesson 2 | Real Loyihalar Ustida Ishlash (Agrotech & ArabicAI)</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Track A: Agrotech</strong> - Qishloq xo'jaligi zararkunandalarini AI bilan aniqlash funksionalligi.</li>
+                                <li><strong class="text-notion-text">Track B: ArabicAI</strong> - Arab tili va tajvidni AI audio-tahlil yordamida o'rgatuvchi platforma.</li>
+                                <li><strong class="text-notion-text">Track C: Muxsin Fayz ERP</strong> - Kichik biznes va savdo avtomatizatsiyasi.</li>
+                            </ul>
+
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-3-2" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-3-2" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> Tanlangan reall loyihaga 1 ta interaktiv tugma yoki kalkulyator funksiyasini qo'shish.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </details>
+
+            <!-- ================= MODUL 4 ================= -->
+            <details id="modul-4" class="notion-toggle group bg-notion-card border border-notion-border rounded-xl p-4 transition-all duration-200">
+                <summary class="cursor-pointer list-none flex items-center justify-between text-base md:text-lg font-bold font-mono text-amber-400 select-none">
+                    <div class="flex items-center gap-2">
+                        <span class="notion-toggle-arrow inline-block text-notion-muted text-sm">►</span>
+                        <i class="fa-solid fa-folder-open text-amber-400 text-sm"></i>
+                        <span>Modul 4 | Slayd, Pitching va Sahna Mahorati</span>
+                    </div>
+                    <span class="text-xs font-mono bg-amber-950 text-amber-300 border border-amber-800/50 px-2.5 py-0.5 rounded-full font-normal">4 Dars</span>
+                </summary>
+
+                <div class="mt-4 pl-4 md:pl-6 space-y-3 border-l-2 border-notion-border/60 ml-2 pt-2">
+
+                    <!-- Lesson 1 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-amber-400 text-xs"></i>
+                                <span>Lesson 1 | 10 ta Slayddan Iborat Pitch Deck Yaratish</span>
+                            </div>
+                        </summary>
+                        <div class="mt-3 pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> Pitch Deck strukturasi (Muammo, Yechim, Bozor, Prototip, Jamoa).</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Canva PPT shablonlari va AI Presenter bilan slayd tayyorlash.</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> 3 minutlik Nutq strukturasi (Elevator Pitch).</li>
+                            </ul>
+
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-4-1" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-4-1" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> Canva'da o'z loyihangiz uchun 7-10 ta slayddan iborat Pitch Deck taqdimotini yakunlash.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Lesson 2 -->
+                    <details class="notion-toggle lesson-item bg-[#1a1a1a] border border-notion-border/80 rounded-lg p-3">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-sm font-semibold font-mono text-notion-text hover:text-white select-none">
+                            <div class="flex items-center gap-2">
+                                <span class="notion-toggle-arrow text-notion-muted text-xs">►</span>
+                                <i class="fa-solid fa-file-code text-amber-400 text-xs"></i>
+                                <span>Lesson 2 | Sahna Nutqi va Hakamlar Savollariga Javob</span>
+                            </div>
+                        </summary>
+                        <div class="mt-[#3] pl-5 space-y-2 text-xs text-notion-text">
+                            <ul class="list-disc pl-4 space-y-1.5 text-notion-muted">
+                                <li><strong class="text-notion-text">Mavzu 1:</strong> Sahnada hayajonni yengish va tana tili (Body Language).</li>
+                                <li><strong class="text-notion-text">Mavzu 2:</strong> Hakamlar berishi mumkin bo'lgan top-10 ta noqulay savolga tayyorgarlik.</li>
+                                <li><strong class="text-notion-text">Mavzu 3:</strong> Sayohat va Musobaqa Simulyatsiyasi (Demo Day).</li>
+                            </ul>
+
+                            <div class="mt-3 p-2.5 bg-purple-950/20 border border-purple-900/40 rounded flex items-start gap-2.5">
+                                <input type="checkbox" id="hw-4-2" onchange="toggleHomework(this)" class="hw-checkbox mt-0.5 h-4 w-4 rounded border-gray-600 text-purple-600 focus:ring-purple-500 accent-purple-500 cursor-pointer">
+                                <label for="hw-4-2" class="cursor-pointer leading-snug">
+                                    <strong class="text-purple-300 font-mono">Uyga Vazifa:</strong> Videoga 2 minutlik Pitch Nutqini yozib, ustozga jo'natish.
+                                </label>
+                            </div>
+                        </div>
+                    </details>
+
+                </div>
+            </details>
+
+        </div>
+
+        <!-- Footer / Credits -->
+        <footer class="mt-16 pt-6 border-t border-notion-border text-center text-xs text-notion-muted flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-heart text-red-500"></i>
+                <span>Muallif va Kordinator: <strong class="text-notion-text">Erkinjonova Shohida</strong></span>
+            </div>
+            <div class="font-mono text-[11px] text-notion-muted">
+                Xos IT & AI Club | Raqamli Avlod Qizlari Bekobod
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Notification Toast Modal -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-purple-900/90 text-white border border-purple-500/40 px-4 py-2.5 rounded-lg shadow-xl font-mono text-xs hidden items-center gap-2 z-50 transition-all">
+        <i class="fa-solid fa-check-circle text-emerald-400"></i>
+        <span id="toast-message">Prompt nusxalandi!</span>
+    </div>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Copy prompt helper function
+        function copyPrompt(btn) {
+            const promptText = btn.getAttribute('data-prompt');
+            
+            // Clipboard copy with fallback
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(promptText);
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = promptText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+
+            // Show Toast Notification
+            showToast("Prompt nusxalandi! ChatGPT/Lovablesga qo'yishingiz mumkin.");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = msg;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3000);
+        }
+
+        // Toggle Expand/Collapse All
+        function toggleAllToggles(openState) {
+            const detailsList = document.querySelectorAll('.notion-toggle');
+            detailsList.forEach(detail => {
+                detail.open = openState;
+            });
+        }
+
+        // Filter Lessons Search
+        function filterLessons() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const lessons = document.querySelectorAll('.lesson-item');
+            const modules = document.querySelectorAll('#modules-container > details');
+
+            modules.forEach(mod => {
+                let moduleHasMatch = false;
+                const modLessons = mod.querySelectorAll('.lesson-item');
+
+                modLessons.forEach(lesson => {
+                    const text = lesson.innerText.toLowerCase();
+                    if (text.includes(query)) {
+                        lesson.style.display = 'block';
+                        moduleHasMatch = true;
+                    } else {
+                        lesson.style.display = 'none';
+                    }
+                });
+
+                if (moduleHasMatch || query === '') {
+                    mod.style.display = 'block';
+                    if (query !== '') mod.open = true;
+                } else {
+                    mod.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter Categories
+        function filterCategory(cat) {
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(b => {
+                b.classList.remove('active', 'text-notion-text', 'bg-purple-900/40');
+                b.classList.add('text-notion-muted');
+            });
+            event.target.classList.add('active', 'text-notion-text');
+
+            const searchInput = document.getElementById('search-input');
+            if (cat === 'all') {
+                searchInput.value = '';
+            } else if (cat === 'debocha') {
+                searchInput.value = 'Startap';
+            } else if (cat === 'ai') {
+                searchInput.value = 'AI';
+            }
+            filterLessons();
+        }
+
+        // LocalStorage Homework Tracker Logic
+        function toggleHomework(checkbox) {
+            const id = checkbox.id;
+            localStorage.setItem('hw_' + id, checkbox.checked);
+            updateProgress();
+        }
+
+        function loadHomeworkState() {
+            const checkboxes = document.querySelectorAll('.hw-checkbox');
+            checkboxes.forEach(cb => {
+                const saved = localStorage.getItem('hw_' + cb.id);
+                if (saved === 'true') {
+                    cb.checked = true;
+                }
+            });
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.hw-checkbox');
+            const total = checkboxes.length;
+            let checked = 0;
+
+            checkboxes.forEach(cb => {
+                if (cb.checked) checked++;
+            });
+
+            const percent = total > 0 ? Math.round((checked / total) * 100) : 0;
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-percent').innerText = percent + '%';
+            document.getElementById('progress-count').innerText = `${checked} / ${total} bajarildi`;
+        }
+
+        // Scroll to Dashboard view
+        function showDashboard() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // On Load Init
+        window.onload = function() {
+            loadHomeworkState();
+        };
+    </script>
+</body>
+</html>
